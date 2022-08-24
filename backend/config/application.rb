@@ -19,6 +19,11 @@ require "rails/test_unit/railtie"
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
 
+if ['development', 'test'].include? ENV['RAILS_ENV']
+  Dotenv::Railtie.load
+  require 'faker'
+end
+
 module Exptrack
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
