@@ -3,4 +3,8 @@ class ApplicationController < ActionController::API
     record = error.record
     render json: record.errors, status: :bad_request
   end
+
+  rescue_from ActiveRecord::RecordNotFound do |error|
+    render json: error.to_json, status: :not_found
+  end
 end

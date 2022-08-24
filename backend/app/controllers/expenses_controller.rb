@@ -1,4 +1,8 @@
 class ExpensesController < ApplicationController
+  rescue_from Accounts::BalanceUpdater::NegativeBalanceError do |error|
+    render json: error.message.to_json, status: :bad_request
+  end
+
   def index
     render json: Expense.order(date: :desc)
   end
