@@ -7,11 +7,13 @@ import {
   Link,
 } from "react-router-dom";
 import styles from "./App.module.css";
-import ExpensesPage from "./components/ExpensesPage";
-import ExpenseEdit from "./components/ExpenseEdit";
-import AccountsPage from "./components/AccountsPage";
-import AccountEdit from "./components/AccountEdit";
-import Notifications from "./components/Notifications";
+import ExpensesPage from "./components/expense/ExpensesPage";
+import ExpenseEdit from "./components/expense/ExpenseEdit";
+import ExpenseNew from "./components/expense/ExpenseNew";
+import AccountsPage from "./components/account/AccountsPage";
+import AccountEdit from "./components/account/AccountEdit";
+import AccountNew from "./components/account/AccountNew";
+import Notifications from "./components/common/Notifications";
 
 function App() {
   return (
@@ -42,7 +44,7 @@ function App() {
                 <ExpensesPage />
               </Route>
               <Route exact path={"/expense/new"}>
-                <ExpenseEdit />
+                <ExpenseNew />
               </Route>
               <Route exact path={"/expense/:id"}>
                 <ExpenseEdit />
@@ -51,7 +53,7 @@ function App() {
                 <AccountsPage />
               </Route>
               <Route exact path={"/accounts/new"}>
-                <AccountEdit />
+                <AccountNew />
               </Route>
               <Route exact path={"/accounts/:id"}>
                 <AccountEdit />

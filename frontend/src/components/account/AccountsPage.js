@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import LoadingIndicator from "./LoadingIndicator";
-import ErrorMessage from "./ErrorMessage";
-import request from "../request";
-import styles from "./ExpensesPage.module.css";
-import Button from "./Button";
+import LoadingIndicator from "../common/LoadingIndicator";
+import ErrorMessage from "../common/ErrorMessage";
+import request from "../../request";
+import styles from "../common/Page.module.css";
+import Button from "../common/Button";
+import NoRecordsPage from "../common/NoRecordsPage";
+import loadPageContent from "../common/loadPageContent";
 
 function AccountRow({ account }) {
   return (
@@ -22,12 +24,7 @@ function AccountList({ accounts }) {
 
   if (accounts.length === 0) {
     return (
-      <div className={styles.emptyState}>
-        <div className={styles.emptyStateMessage}>
-          You haven't recorded any accounts.
-        </div>
-        <div>{newAccountButton}</div>
-      </div>
+      <NoRecordsPage message="You haven't recorded any accounts" button={newAccountButton} />
     );
   }
 
@@ -64,18 +61,7 @@ function AccountsPage() {
     loadAccounts();
   }, []);
 
-  let content;
-  if (status === "loading") {
-    content = <LoadingIndicator />;
-  } else if (status === "loaded") {
-    content = <AccountList accounts={accounts} />;
-  } else if (status === "error") {
-    content = <ErrorMessage />;
-  } else {
-    throw new Error(`Unexpected status: ${status}`);
-  }
-
-  return content;
+  return loadPageContent(status, <AccountList accounts={accounts} />);
 }
 
 export default AccountsPage;
