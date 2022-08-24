@@ -21,6 +21,7 @@ Bundler.require(*Rails.groups)
 
 if ['development', 'test'].include? ENV['RAILS_ENV']
   Dotenv::Railtie.load
+  require 'faker'
 end
 
 module Exptrack
