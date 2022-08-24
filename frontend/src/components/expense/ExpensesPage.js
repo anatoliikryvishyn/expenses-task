@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import LoadingIndicator from "./LoadingIndicator";
-import ErrorMessage from "./ErrorMessage";
-import request from "../request";
-import styles from "./ExpensesPage.module.css";
-import Button from "./Button";
+import LoadingIndicator from "../common/LoadingIndicator";
+import ErrorMessage from "../common/ErrorMessage";
+import request from "../../request";
+import styles from "../common/Page.module.css";
+import Button from "../common/Button";
+import NoRecordsPage from "../common/NoRecordsPage";
+import loadPageContent from "../common/loadPageContent";
 
 function ExpenseRow({ expense }) {
   return (
@@ -19,15 +21,10 @@ function ExpenseRow({ expense }) {
 
 function ExpenseList({ expenses }) {
   const newExpenseButton = <Button to={"/expense/new"}>New Expense</Button>;
-
+  
   if (expenses.length === 0) {
     return (
-      <div className={styles.emptyState}>
-        <div className={styles.emptyStateMessage}>
-          You haven't recorded any expenses.
-        </div>
-        <div>{newExpenseButton}</div>
-      </div>
+      <NoRecordsPage message="You haven't recorded any expenses" button={newExpenseButton} />
     );
   }
 
@@ -64,18 +61,7 @@ function ExpensesPage() {
     loadExpenses();
   }, []);
 
-  let content;
-  if (status === "loading") {
-    content = <LoadingIndicator />;
-  } else if (status === "loaded") {
-    content = <ExpenseList expenses={expenses} />;
-  } else if (status === "error") {
-    content = <ErrorMessage />;
-  } else {
-    throw new Error(`Unexpected status: ${status}`);
-  }
-
-  return content;
+  return loadPageContent(status, <ExpenseList expenses={expenses} />);
 }
 
 export default ExpensesPage;
