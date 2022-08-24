@@ -29,7 +29,7 @@ function ExpenseForm({ expense, accounts, onSave, disabled, onDelete }) {
           <label htmlFor="amount">Amount</label>
           <input
             required
-            min={"0"}
+            min={"1"}
             id={"amount"}
             type={"number"}
             value={formData.amount}
