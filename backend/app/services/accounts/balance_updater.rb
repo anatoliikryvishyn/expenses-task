@@ -23,12 +23,12 @@ module Accounts
 
     class NegativeBalanceError < StandardError
       def message
-        "Balance can't be negative"
+        "Account balance can't be negative"
       end
     end
 
     def negative_balance?
       account.balance < amount
-    end	
+    end
   end
 end
