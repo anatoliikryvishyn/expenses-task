@@ -36,10 +36,19 @@ function Notification({ type, message, onClose }) {
 
 export default function Notifications({ children }) {
   const [notification, setNotification] = useState(null);
+  const notificationLifeTime = 5000
+
+  const setNotificationWithTimeout = (message, type) => {
+    setNotification({ message, type });
+    const timer = setTimeout(() => {
+      setNotification(null);
+    }, notificationLifeTime);
+    return () => clearTimeout(timer);
+  }
 
   const contextValue = useMemo(
     () => ({
-      notify: ({ message, type }) => setNotification({ message, type }),
+      notify: ({ message, type }) => setNotificationWithTimeout(message, type),
     }),
     [setNotification]
   );
